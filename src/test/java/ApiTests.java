@@ -1,5 +1,8 @@
+import controllers.UserController;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import models.AddUserResponse;
+import models.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +11,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ApiTests {
+    UserController userController = new UserController();
 
     @Test
     void createUser() {
@@ -68,6 +72,27 @@ public class ApiTests {
                 .body("code", equalTo(200))
                 .body("type", equalTo("unknown"))
                 .body("message", notNullValue(String.class));
+
+    }
+    @Test
+     void createUserControllerTest(){
+
+        User user = new User(0,
+                "username",
+                "firstName",
+                "lastName",
+                "email",
+                "password",
+                "phone",
+                0);
+
+        Response response = userController.createUser(user);
+        AddUserResponse createdUserResponse = response.as(AddUserResponse.class);
+
+        Assertions.assertEquals(200, response.statusCode());
+        Assertions.assertEquals(200, createdUserResponse.getCode());
+        Assertions.assertEquals("unknown", createdUserResponse.getType());
+        Assertions.assertFalse(createdUserResponse.getMessage().isEmpty());
 
     }
 }
