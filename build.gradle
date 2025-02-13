@@ -22,7 +22,7 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
+    implementation 'org.seleniumhq.selenium:selenium-java:4.28.1'
 }
 
 test {
