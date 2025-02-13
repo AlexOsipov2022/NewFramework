@@ -13,6 +13,6 @@ public class TestData {
             .userStatus(0)
             .build();
 
-    public static final User INVALID_USER = User.builder().build();
+    public static final User INVALID_USER = User.builder().build(); //поля заполнятся дэфолтными значениями скорее всего NULL
 
 }

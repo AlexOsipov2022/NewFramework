@@ -5,20 +5,29 @@ import models.AddUserResponse;
 import models.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.equalTo;
 import static testdata.TestData.DEFAULT_USER;
+import static testdata.TestData.INVALID_USER;
 
 public class ApiTests {
 
     UserController userController = new UserController();
 
-    @Test
-     void createUserControllerTest(){
+    static Stream<User> users() {
+        return Stream.of(DEFAULT_USER, INVALID_USER);
+    }
 
-        Response response = userController.createUser(DEFAULT_USER);
+    @ParameterizedTest
+    @MethodSource("users")
+    void createUserParametrizedTest(User user) {
+        Response response = userController.createUser(user);
         AddUserResponse createdUserResponse = response.as(AddUserResponse.class);
 
         Assertions.assertEquals(200, response.statusCode());
@@ -26,6 +35,33 @@ public class ApiTests {
         Assertions.assertEquals("unknown", createdUserResponse.getType());
         Assertions.assertFalse(createdUserResponse.getMessage().isEmpty());
     }
+
+//    Этап 2
+
+    //    @Test
+//     void createUserControllerTest(){
+//
+//        Response response = userController.createDefaultUser();
+//        AddUserResponse createdUserResponse = response.as(AddUserResponse.class);
+//
+//        Assertions.assertEquals(200, response.statusCode());
+//        Assertions.assertEquals(200, createdUserResponse.getCode());
+//        Assertions.assertEquals("unknown", createdUserResponse.getType());
+//        Assertions.assertFalse(createdUserResponse.getMessage().isEmpty());
+//    }
+//
+//    @Test
+//    void createInvalidUserControllerTest() {
+//        Response response = userController.createUser(INVALID_USER);
+//        AddUserResponse createdUserResponse = response.as(AddUserResponse.class);
+//
+//        Assertions.assertEquals(200, response.statusCode());
+//        Assertions.assertEquals(200, createdUserResponse.getCode());
+//        Assertions.assertEquals("unknown", createdUserResponse.getType());
+//        Assertions.assertEquals("0", createdUserResponse.getMessage());
+//    }
+
+//    Этап 1
 
     //    @Test
 //    void createUser() {

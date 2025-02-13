@@ -7,6 +7,7 @@ import models.User;
 import static constants.CommonConstants.BASE_URI;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
+import static testdata.TestData.DEFAULT_USER;
 
 public class UserController {
     RequestSpecification requestSpecification;
@@ -19,9 +20,16 @@ public class UserController {
                 .baseUri(BASE_URI);
     }
 
+    public Response createDefaultUser() {
+        return given(this.requestSpecification)
+                .body(DEFAULT_USER)
+                .when()
+                .post(USER_ENDPOINT)
+                .andReturn();
+    }
     public Response createUser(User user) {
         return given(this.requestSpecification)
-                .body(user)
+                .body(DEFAULT_USER)
                 .when()
                 .post(USER_ENDPOINT)
                 .andReturn();
