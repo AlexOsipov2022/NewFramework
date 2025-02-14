@@ -1,10 +1,10 @@
+package Tests;
+
 import controllers.UserController;
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.AddUserResponse;
 import models.User;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.Matchers.equalTo;
 import static testdata.TestData.DEFAULT_USER;
 import static testdata.TestData.INVALID_USER;
 
