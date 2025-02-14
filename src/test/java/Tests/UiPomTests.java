@@ -1,12 +1,17 @@
 package Tests;
 
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.LoginPage;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static constants.CommonConstants.UI_BASE_URL;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class UiPomTests extends BaseTest {
-
+class UiPomTests extends BaseTest {
     @Test
     void loginPomTest() {
         LoginPage loginPage = new LoginPage(driver, longWait);
@@ -14,5 +19,4 @@ public class UiPomTests extends BaseTest {
 
         assertThat(driver.getCurrentUrl()).contains("login-sucess");
     }
-
 }
