@@ -1,5 +1,3 @@
-package Tests;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import static constants.CommonConstants.UI_BASE_URL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class UiTests extends BaseTest{
+public class UiTests extends BaseTest {
 
 
     @Test
