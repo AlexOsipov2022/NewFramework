@@ -18,8 +18,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: '5.5.1'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
-
-        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"

@@ -1,3 +1,5 @@
+package tests;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -7,8 +9,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BaseTest {
-    WebDriver driver;
+    static WebDriver driver;
     WebDriverWait longWait;
+
+    public static WebDriver getDriver() {
+        return driver;
+    }
 
     @BeforeEach
     void setup() {
@@ -16,6 +22,7 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
         longWait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
+
     @AfterEach
     void tearDown() {
         driver.quit();
