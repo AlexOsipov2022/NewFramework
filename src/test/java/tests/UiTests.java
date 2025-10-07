@@ -5,15 +5,18 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import utils.AfterTestExtension;
 
 import static constants.CommonConstants.UI_BASE_URL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Story("UI tests")
 @Tag("ui")
+@ExtendWith(AfterTestExtension.class)
 public class UiTests extends BaseTest {
 
     @Test

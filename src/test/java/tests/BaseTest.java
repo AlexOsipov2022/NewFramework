@@ -1,5 +1,6 @@
 package tests;
 
+import lombok.Getter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -9,12 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class BaseTest {
+    @Getter
     static WebDriver driver;
     WebDriverWait longWait;
-
-    public static WebDriver getDriver() {
-        return driver;
-    }
 
     @BeforeEach
     void setup() {
