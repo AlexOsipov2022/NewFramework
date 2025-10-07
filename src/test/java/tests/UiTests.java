@@ -9,7 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.AfterTestExtension;
+
+import java.time.Duration;
 
 import static constants.CommonConstants.UI_BASE_URL;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,9 +28,14 @@ public class UiTests extends BaseTest {
         driver.findElement(By.linkText("Web form")).click();
         driver.findElement(By.id("my-text-id")).sendKeys("Text");
         driver.findElement(By.xpath("//button[@type = 'submit']")).click();
-        WebElement title = driver.findElement(By.className("display-6"));
+        By titleLocator = By.className("display-6");
+        longWait.until(ExpectedConditions.textToBePresentInElementLocated(
+                titleLocator,
+                "Form submitted"
+        ));
+        WebElement titleForm = driver.findElement(titleLocator);
 
-        Assertions.assertEquals("Form submitted", title.getText());
+        Assertions.assertEquals("Form submitted", titleForm.getText());
     }
 
     @Test
