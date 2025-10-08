@@ -26,8 +26,8 @@ jobs:
 
     # --- FIX: Install Headless Browser Dependencies to resolve SessionNotCreatedException ---
     # These dependencies are often required for Chrome/Chromium to run correctly in a headless Linux environment.
-    - name: Install UI Test Dependencies (Headless Environment)
-      run: sudo apt-get update && sudo apt-get install -y libglib2.0-0 libnss3 libfontconfig1 libdbus-1-3
+    - name: Install Chromium and Dependencies (for UI Testing)
+      run: sudo apt-get update && sudo apt-get install -y chromium-browser libglib2.0-0 libnss3 libfontconfig1 libdbus-1-3
 
     - name: Set execute permission for gradlew
       run: chmod +x gradlew
@@ -63,6 +63,17 @@ jobs:
         PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: allure-history # The output folder created by simple-elf/allure-report-action
+
+    # --- Добавленный шаг для вывода ссылки на отчет ---
+    - name: Display Allure Report URL
+      if: always()
+      run: |
+        # Формируем ссылку на GitHub Pages, используя встроенные переменные GitHub
+        REPORT_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/allure-history/index.html"
+        echo "## Allure Report Live Here:"
+        echo "$REPORT_URL"
+        echo "::notice file=README.md,title=Allure Report URL::Open $REPORT_URL to see the test results."
+
 
   dependency-submission:
     # This job now only focuses on dependency submission.
