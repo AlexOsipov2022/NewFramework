@@ -24,6 +24,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    # --- FIX: Install Headless Browser Dependencies to resolve SessionNotCreatedException ---
+    # These dependencies are often required for Chrome/Chromium to run correctly in a headless Linux environment.
+    - name: Install UI Test Dependencies (Headless Environment)
+      run: sudo apt-get update && sudo apt-get install -y libglib2.0-0 libnss3 libfontconfig1 libdbus-1-3
+
     - name: Set execute permission for gradlew
       run: chmod +x gradlew
 
