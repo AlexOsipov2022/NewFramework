@@ -23,7 +23,7 @@ public class BaseSelenideTest {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
         Configuration.timeout = 40;
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+//        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 
     @AfterEach
