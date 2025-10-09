@@ -21,7 +21,6 @@ import static testdata.TestData.DEFAULT_USER;
 import static testdata.TestData.INVALID_USER;
 
 @Story("API tests")
-@Tag("api")
 public class ApiTests {
 
     UserController userController = new UserController();
@@ -30,6 +29,7 @@ public class ApiTests {
         return Stream.of(DEFAULT_USER, INVALID_USER);
     }
 
+    @Tag("api")
     @ParameterizedTest
     @MethodSource("users")
     void createUserParametrizedTest(User user) {
@@ -42,8 +42,8 @@ public class ApiTests {
         Assertions.assertFalse(createdUserResponse.getMessage().isEmpty());
     }
 
-//    Этап 2
-
+    //    Этап 2
+    @Tag("api")
     @Test
     void createUserControllerTest() {
 
@@ -67,8 +67,8 @@ public class ApiTests {
 //        Assertions.assertEquals("0", createdUserResponse.getMessage());
 //    }
 
-//    Этап 1
-
+    //    Этап 1
+    @Tag("api")
     @Test
     void createUser() {
         String baseUrl = "https://petstore.swagger.io/v2/";
@@ -102,6 +102,7 @@ public class ApiTests {
 
     }
 
+    @Tag("api")
     @Test
     void createUser2() {
         String baseUrl = "https://petstore.swagger.io/v2/";
