@@ -18,6 +18,6 @@ public class UiSelenideTests extends BaseSelenideTest {
         $(byText("Web form")).click();
         $("#my-text-id").setValue("Text");
         $("button[type='submit']").click();
-        $(".display-6").shouldHave(text("Form submitted555"));
+        $(".display-6").shouldHave(text("Form submitted"));
     }
 }
