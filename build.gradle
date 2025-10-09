@@ -47,10 +47,10 @@ tasks.named('test', Test) {
     // Эта строка решает проблему с 'Unknown command-line option'
     useJUnitPlatform()
 
-    // Добавляем логирование, чтобы в консоли CI было видно, что происходит
-    testLogging {
-        events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
-    }
+//    // Добавляем логирование, чтобы в консоли CI было видно, что происходит
+//    testLogging {
+//        events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
+//    }
 }
 
 // Включает поддержку JUnit Platform
