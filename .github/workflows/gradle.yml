@@ -44,13 +44,13 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
 
-#      - name: Build with Gradle Wrapper
-#        run: ./gradlew build
+      - name: Build with Gradle Wrapper
+        run: ./gradlew build
 
           # Явно запускаем задачу 'test' с фильтром по тегу "api" (соответствует @Tag("api"))
-      - name: Run API Tests with Tag Filter
-          # Замените 'api' на нужный вам тег.
-        run: ./gradlew clean test -PtestTags=api
+#      - name: Run API Tests with Tag Filter
+#          # Замените 'api' на нужный вам тег.
+#        run: ./gradlew clean test -PtestTags=api
       
       # --- 4. Allure Report Generation ---
       - name: Copy Allure History
