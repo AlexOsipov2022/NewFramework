@@ -50,7 +50,7 @@ jobs:
           # Явно запускаем задачу 'test' с фильтром по тегу "api" (соответствует @Tag("api"))
       - name: Run API Tests with Tag Filter
           # Замените 'api' на нужный вам тег.
-        run: ./gradlew clean test --include-tags api
+        run: ./gradlew clean test -PtestTags=api
       
       # --- 4. Allure Report Generation ---
       - name: Copy Allure History
