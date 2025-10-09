@@ -20,7 +20,7 @@ public class BaseSelenideTest {
 
     @BeforeEach
     public void setUp() {
-//        driver = new ChromeDriver();
+        driver = new ChromeDriver();
         Configuration.browser = "chrome";
         ChromeOptions options = new ChromeOptions();
         // 2. Добавляем аргумент для безголового режима

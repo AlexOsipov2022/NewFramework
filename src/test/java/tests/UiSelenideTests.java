@@ -3,6 +3,8 @@ package tests;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -18,6 +20,6 @@ public class UiSelenideTests extends BaseSelenideTest {
         $(byText("Web form")).click();
         $("#my-text-id").setValue("Text");
         $("button[type='submit']").click();
-        $(".display-6").shouldHave(text("Form submitted"));
+        $("h1.display-6").shouldHave(text("Form submitted"), Duration.ofSeconds(10));
     }
 }
