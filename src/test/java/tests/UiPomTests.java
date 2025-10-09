@@ -17,6 +17,6 @@ public class UiPomTests extends BaseTest {
         loginPage.login();
         longWait.until(ExpectedConditions.urlContains("login-sucess"));
 
-       assertThat(driver.getCurrentUrl()).contains("login-sucess");
+        assertThat(driver.getCurrentUrl()).contains("login-sucess");
     }
 }
