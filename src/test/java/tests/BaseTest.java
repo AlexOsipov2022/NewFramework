@@ -23,7 +23,9 @@ public class BaseTest {
         options.addArguments("--headless=new");
         // Крайне важно для Headless, чтобы имитировать разрешение экрана
         options.addArguments("--window-size=1920,1080");
-
+        // Создайте уникальный путь, используя, например, номер сборки Jenkins
+        String uniqueUserDataDir = "/tmp/chrome_user_data/" + System.getenv("BUILD_NUMBER");
+        options.addArguments("--user-data-dir=" + uniqueUserDataDir);
         // 2. Инициализация драйвера С ОПЦИЯМИ
         // Эту строку необходимо вызвать ПЕРЕД тем, как использовать 'driver'!
         driver = new ChromeDriver(options);

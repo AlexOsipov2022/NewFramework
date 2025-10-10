@@ -1,87 +1,81 @@
-task_branch = "${TEST_BRANCH_NAME}"
-def branch_cutted = task_branch.contains("origin") ? task_branch.split('/')[1] : task_branch.trim()
-currentBuild.displayName = "$branch_cutted"
-base_git_url = "https://gitlab.com/epickonfetka/cicd-threadqa.git"
+pipeline {
+    agent any
 
+    parameters {
+        string(name: 'TEST_BRANCH_NAME', defaultValue: 'master', description: 'Branch to build')
+    }
 
-node {
-    withEnv(["branch=${branch_cutted}", "base_url=${base_git_url}"]) {
-        stage("Checkout Branch") {
-            if (!"$branch_cutted".contains("master")) {
-                try {
-                    getProject("$base_git_url", "$branch_cutted")
-                } catch (err) {
-                    echo "Failed get branch $branch_cutted"
-                    throw ("${err}")
+    environment {
+        base_git_url = "https://gitlab.com/epickonfetka/cicd-threadqa.git"
+    }
+
+    stages {
+        stage('Checkout Branch') {
+            steps {
+                script {
+                    def task_branch = params.TEST_BRANCH_NAME
+                    def branch_cutted = task_branch.contains("origin") ? task_branch.split('/')[1] : task_branch.trim()
+                    currentBuild.displayName = branch_cutted
+                    if (!branch_cutted.contains("master")) {
+                        try {
+                            cleanWs()
+                            checkout([
+                                    $class: 'GitSCM',
+                                    branches: [[name: branch_cutted]],
+                                    userRemoteConfigs: [[url: env.base_git_url]]
+                            ])
+                        } catch (err) {
+                            echo "Failed get branch ${branch_cutted}"
+                            throw err
+                        }
+                    } else {
+                        echo "Current branch is master"
+                    }
                 }
-            } else {
-                echo "Current branch is master"
             }
         }
 
-        try {
-            parallel getTestStages(["apiTests", "uiTests"])
-        } finally {
-            stage ("Allure") {
-                generateAllure()
+        stage('Parallel Test Execution') {
+            parallel {
+                stage('API Tests') {
+                    steps {
+                        sh './gradlew clean test -PtestTags=api'
+                    }
+                }
+                stage('UI Tests') {
+                    steps {
+                        sh './gradlew clean test -PtestTags=ui'
+                    }
+                }
             }
         }
 
-//        try {
-//            stage("Run tests") {
-//                parallel(
-//                        'Api Tests': {
-//                            runTestWithTag("apiTests")
-//                        },
-//                        'Ui Tests': {
-//                            runTestWithTag("uiTests")
-//                        }
-//                )
-//            }
-//        } finally {
-//            stage("Allure") {
-//                generateAllure()
-//            }
-//        }
-    }
-}
+        stage('Build Snapshot JAR') {
+            steps {
+                sh './gradlew clean build'
+            }
+        }
 
+        stage('Archive JAR') {
+            steps {
+                archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+            }
+        }
 
-def getTestStages(testTags) {
-    def stages = [:]
-    testTags.each { tag ->
-        stages["${tag}"] = {
-            runTestWithTag(tag)
+        stage('Allure Report') {
+            steps {
+                allure([
+                        includeProperties: true,
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: 'build/allure-results']]
+                ])
+            }
         }
     }
-    return stages
-}
 
-
-def runTestWithTag(String tag) {
-    try {
-        labelledShell(label: "Run ${tag}", script: "chmod +x gradlew \n./gradlew -x test ${tag}")
-    } finally {
-        echo "some failed tests"
+    post {
+        always {
+            junit 'build/test-results/test/*.xml'
+        }
     }
-}
-
-def getProject(String repo, String branch) {
-    cleanWs()
-    checkout scm: [
-            $class           : 'GitSCM', branches: [[name: branch]],
-            userRemoteConfigs: [[
-                                        url: repo
-                                ]]
-    ]
-}
-
-def generateAllure() {
-    allure([
-            includeProperties: true,
-            jdk              : '',
-            properties       : [],
-            reportBuildPolicy: 'ALWAYS',
-            results          : [[path: 'build/allure-results']]
-    ])
 }
