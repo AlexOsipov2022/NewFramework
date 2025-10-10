@@ -1,5 +1,5 @@
 "Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
-"","","API tests","0","0","5","0","0"
 "","","UI tests","0","0","3","0","0"
+"","","API tests","0","0","5","0","0"
 "","","UI POM tests","0","0","1","0","0"
-"","","UI Selenide tests","0","1","0","0","0"
+"","","UI Selenide tests","0","0","0","1","0"
