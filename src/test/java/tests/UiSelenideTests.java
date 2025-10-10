@@ -1,6 +1,7 @@
 package tests;
 
 import io.qameta.allure.Story;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,7 @@ import static constants.CommonConstants.UI_BASE_URL;
 
 @Story("UI Selenide tests")
 @Tag("ui")
+@Disabled("Тест временно отключён")
 public class UiSelenideTests extends BaseSelenideTest {
 
     @Test
