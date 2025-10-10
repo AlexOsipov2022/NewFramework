@@ -44,21 +44,12 @@ dependencies {
 }
 
 tasks.named('test', Test) {
-    // Эта строка решает проблему с 'Unknown command-line option'
-    useJUnitPlatform()
-
-//    // Добавляем логирование, чтобы в консоли CI было видно, что происходит
-//    testLogging {
-//        events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
-//    }
+    useJUnitPlatform {
+        if (project.hasProperty('testTags')) {
+            includeTags project.testTags
+        }
+    }
+    testLogging {
+        events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
+    }
 }
-
-// Включает поддержку JUnit Platform
-// Это позволяет Gradle понимать флаг --include-tags при запуске тестов.
-//test {
-//    useJUnitPlatform()
-//    // Полезно для логирования в CI
-//    testLogging {
-//        events "PASSED", "SKIPPED", "FAILED"
-//    }
-//}

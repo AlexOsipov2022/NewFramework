@@ -1,6 +1,7 @@
 package tests;
 
 import io.qameta.allure.Story;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
@@ -12,6 +13,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static constants.CommonConstants.UI_BASE_URL;
 
 @Story("UI Selenide tests")
+@Tag("ui")
 public class UiSelenideTests extends BaseSelenideTest {
 
     @Test
